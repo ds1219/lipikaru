@@ -14,7 +14,7 @@ An romanization script for python, currently supports Sinhala
 * ඥාන වීර්ය වඩවමින රැගෙන - gnāna vīrya vadavamina rægena
 * මඤ්ඤොක්කා - maññokkā
 
-# if you want to remove the diacritics (accent marks) from the output, then you can convert in from unicode to ASCII.
+## removing diacritics (accent marks) from the output
 https://stackoverflow.com/a/7782177
 ```python
 unicodedata.normalize("NFKD", "input text").encode("ascii", "ignore")
