@@ -13,9 +13,3 @@ An romanization script for python, currently supports Sinhala
 * මඩකලපුව - madakalapuva
 * ඥාන වීර්ය වඩවමින රැගෙන - gnāna vīrya vadavamina rægena
 * මඤ්ඤොක්කා - maññokkā
-
-## removing diacritics (accent marks) from the output
-https://stackoverflow.com/a/7782177
-```python
-unicodedata.normalize("NFKD", "input text").encode("ascii", "ignore")
-```
