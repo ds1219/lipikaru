@@ -1,9 +1,25 @@
 import json
 
+ignoredCharacters = [" "]
 
-def transliterate(input_text, language):
+
+def transliterate(input_text: str, language: str, passthrough: bool = True):
+    """
+    returns a string of romanized input text
+        Parameters:
+            input_text (str): text to be romanized
+            language (str): the name of the character map file to be used
+            passthrough (bool): should unknown characters be passed through to the output string
+
+        Returns:
+            output_text (str): the romanized text
+    """
     # load json language map
-    letters, diacritics = readMap("si")
+    try:
+        letters, diacritics = readMap(language)
+    except IOError:
+        print("Invalid Character Map Name")
+        return None
 
     output_text = " "  # Do not remove space
 
@@ -18,11 +34,14 @@ def transliterate(input_text, language):
             if output_text[-1] == "a":
                 output_text = output_text[:-1]
             output_text += diacritics[i]
-        else:  # handle letters
+        else:  # handle other characters
             try:
                 output_text += letters[i]
             except:
-                output_text += i
+                if passthrough or i in ignoredCharacters:
+                    output_text += i
+                else:
+                    print(f"Unmapped Character {i}")
 
     output_text = output_text.strip()
     return output_text
@@ -30,6 +49,16 @@ def transliterate(input_text, language):
 
 # read character map from json file
 def readMap(language):
+    """
+    loads the character map file
+        Parameters:
+            language (str): the name of the character map file to be used
+
+        Returns:
+            letters (dict): the letters and their romanized equivalent
+            diacritics (dict): the vowel diacritics and their romanized equivalent
+
+    """
     with open(f"{language}.json", "r", encoding="utf-8") as f:
         data = json.load(f)
 
